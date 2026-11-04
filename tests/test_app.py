@@ -61,8 +61,9 @@ class SiteTests(unittest.TestCase):
         self.assertIn("09:30–10:50", home)
         self.assertIn("11:20–12:40", home)
         self.assertIn("Велика перерва · 30 хв", home)
-        self.assertIn("починається о 08:00", help_page)
-        self.assertIn("після другої — велика перерва 30 хвилин", help_page)
+        normalized_help = " ".join(help_page.split())
+        self.assertIn("починається о 08:00", normalized_help)
+        self.assertIn("після другої — велика перерва 30 хвилин", normalized_help)
 
     def test_styles_and_not_found(self):
         with self.client.get("/static/css/style.css") as stylesheet:

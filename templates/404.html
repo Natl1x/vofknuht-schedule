@@ -1,3 +1,12 @@
 {% extends 'base.html' %}
+
 {% block title %}Сторінку не знайдено{% endblock %}
-{% block content %}<section class="page-heading"><p class="eyebrow">ПОМИЛКА 404</p><h1>Цієї сторінки немає в розкладі.</h1><p class="lead">Перевір адресу або повернися на головну.</p><a class="button" href="{{ url_for('home') }}">На головну →</a></section>{% endblock %}
+
+{% block content %}
+  <section class="page-heading">
+    <p class="eyebrow">ПОМИЛКА 404</p>
+    <h1>Цієї сторінки немає в розкладі.</h1>
+    <p class="lead">Перевір адресу або повернися на головну.</p>
+    <a class="button" href="{{ url_for('home') }}">На головну →</a>
+  </section>
+{% endblock %}
