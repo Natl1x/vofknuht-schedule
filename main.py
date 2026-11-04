@@ -27,8 +27,9 @@ def schedule():
         ("Четвер", ("Основи програмування", "Іноземна мова", "Інформатика")),
         ("П’ятниця", ("Українська мова", "Основи програмної інженерії", "Фізична культура")),
     )
-    return render_template("schedule.html", days=days,
-                           times=("08:30–09:50", "10:00–11:20", "11:40–13:00"))
+    times = ("08:00–09:20", "09:30–10:50", "11:20–12:40")
+    breaks = ("10 хв", "30 хв — велика перерва")
+    return render_template("schedule.html", days=days, times=times, breaks=breaks)
 
 
 @app.route("/about")

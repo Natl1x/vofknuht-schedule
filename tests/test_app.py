@@ -49,6 +49,20 @@ class SiteTests(unittest.TestCase):
         self.assertIn("Демонстраційні дані", html)
         self.assertEqual(html.count('class="day-card"'), 5)
         self.assertEqual(html.count('class="pair"'), 15)
+        for time in ("08:00–09:20", "09:30–10:50", "11:20–12:40"):
+            self.assertIn(time, html)
+        self.assertEqual(html.count("10 хв"), 5)
+        self.assertEqual(html.count("30 хв — велика перерва"), 5)
+
+    def test_home_and_help_show_schedule_times_and_breaks(self):
+        home = self.client.get("/").get_data(as_text=True)
+        help_page = self.client.get("/help").get_data(as_text=True)
+        self.assertIn("08:00–09:20", home)
+        self.assertIn("09:30–10:50", home)
+        self.assertIn("11:20–12:40", home)
+        self.assertIn("Велика перерва · 30 хв", home)
+        self.assertIn("починається о 08:00", help_page)
+        self.assertIn("після другої — велика перерва 30 хвилин", help_page)
 
     def test_styles_and_not_found(self):
         with self.client.get("/static/css/style.css") as stylesheet:

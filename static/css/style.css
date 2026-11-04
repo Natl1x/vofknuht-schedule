@@ -187,6 +187,20 @@ h3 {
   padding: 15px;
   margin-top: 10px;
 }
+.break-note,
+.break-row {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 650;
+  text-align: center;
+}
+.break-note {
+  padding: 6px 0 0;
+}
+.break-row {
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--line);
+}
 .lesson > span {
   color: var(--accent);
   font-size: 13px;
