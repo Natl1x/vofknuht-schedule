@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Розклад занять ВоФК НУХТ: планування тижня та інформація про заняття.">
+<title>{% block title %}{% endblock %} — Розклад ВоФК НУХТ</title>
+<link rel="icon" type="image/png" href="{{ url_for('static', filename='images/vofknuht-logo.png') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<a class="skip-link" href="#main">Перейти до вмісту</a>
+<header><div class="container header-inner">
+<a class="brand" href="{{ url_for('home') }}"><img class="brand-logo" src="{{ url_for('static', filename='images/vofknuht-logo.png') }}" alt="Логотип Волинського фахового коледжу НУХТ" width="72" height="72"><span>ВоФК НУХТ<small>Студентський розклад</small></span></a>
+<nav aria-label="Головне меню">{% for endpoint, label in navigation %}<a href="{{ url_for(endpoint) }}" {% if request.endpoint == endpoint %}aria-current="page"{% endif %}>{{ label }}</a>{% endfor %}</nav>
+</div></header>
+<main id="main" class="container" tabindex="-1">{% block content %}{% endblock %}</main>
+<footer class="container"><span>ВоФК НУХТ · Розклад занять</span><span>Плануй свій навчальний тиждень</span></footer>
+</body></html>

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Розклад{% endblock %}
+{% block content %}
+<section class="page-heading"><p class="eyebrow">ПЛАН НА ТИЖДЕНЬ</p><h1>Розклад занять</h1><p class="lead">Приклад тижня для демонстраційної групи.</p></section>
+<p class="notice"><strong>Демонстраційні дані.</strong> Предмети й час наведено як приклад, це не офіційний розклад ВоФК НУХТ. Актуальні заняття уточнюйте у коледжі.</p>
+<section class="schedule-grid" aria-label="Навчальний тиждень">
+{% for day, subjects in days %}<article class="day-card"><div class="day-heading"><span class="number">0{{ loop.index }}</span><h2>{{ day }}</h2><span class="muted">3 пари</span></div><ol class="subjects">{% for subject in subjects %}<li><span class="pair">{{ loop.index }} пара · {{ times[loop.index0] }}</span><h3>{{ subject }}</h3><span class="muted">Приклад заняття</span></li>{% endfor %}</ol></article>{% endfor %}
+</section><p class="bottom-note">Потрібна підказка? <a href="{{ url_for('help_page') }}">Переглянь довідку →</a></p>
+{% endblock %}
