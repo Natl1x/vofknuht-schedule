@@ -12,9 +12,11 @@ from werkzeug.utils import secure_filename
 
 from models import get_db, init_app
 from lesson_fields import LESSON_TYPES, SUBGROUPS, split_subject_name
+from api import api, error as api_error
 
 app = Flask(__name__)
 app.config.update(SECRET_KEY="change-this-demo-secret-before-production", DATABASE=str(Path(app.root_path) / "instance" / "schedule.db"), UPLOAD_FOLDER=str(Path(app.root_path) / "instance" / "uploads"), MAX_CONTENT_LENGTH=8 * 1024 * 1024)
+app.register_blueprint(api)
 init_app(app)
 Path(app.config["UPLOAD_FOLDER"]).mkdir(parents=True, exist_ok=True)
 
@@ -314,9 +316,31 @@ def admin_import():
 
 
 @app.errorhandler(403)
-def forbidden(_error): return render_template("error.html", title="Доступ заборонено", message="У вас немає прав для цієї сторінки."), 403
+def forbidden(_error):
+    if request.path.startswith("/api/"): return api_error("Недостатньо прав.", 403)
+    return render_template("error.html", title="Доступ заборонено", message="У вас немає прав для цієї сторінки."), 403
 
 @app.errorhandler(404)
-def not_found(_error): return render_template("404.html"), 404
+def not_found(_error):
+    if request.path.startswith("/api/"): return api_error("Маршрут не знайдено.", 404)
+    return render_template("404.html"), 404
+
+@app.errorhandler(405)
+def method_not_allowed(_error):
+    if request.path.startswith("/api/"): return api_error("Метод не підтримується.", 405)
+    return render_template("error.html", title="Метод не підтримується", message="Спробуйте іншу дію."), 405
+
+@app.errorhandler(500)
+def server_error(_error):
+    if request.path.startswith("/api/"): return api_error("Внутрішня помилка сервера.", 500)
+    return render_template("error.html", title="Помилка сервера", message="Спробуйте пізніше."), 500
+
+@app.get("/apidocs/")
+def api_docs():
+    return render_template("apidocs.html")
+
+@app.get("/openapi.json")
+def openapi_spec():
+    return Response((Path(app.root_path) / "docs" / "openapi.json").read_text(encoding="utf-8"), mimetype="application/json")
 
 if __name__ == "__main__": app.run(host="0.0.0.0", port=5000, debug=True)

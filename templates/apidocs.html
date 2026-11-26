@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Документація API{% endblock %}
+{% block content %}
+<section class="page-heading"><p class="eyebrow">Для розробників</p><h1>API розкладу</h1><p class="lead">JSON API використовує базу даних цього сайту. Повний опис схем запитів і відповідей: <a href="{{ url_for('openapi_spec') }}">OpenAPI 3.0</a>.</p></section>
+<section class="panel"><div class="panel-heading"><h2>Версії та доступ</h2></div><p>Замініть <code>{version}</code> на <code>v1</code> або <code>v2</code>. У v2 заняття додатково містить дату поточного навчального тижня, тип заняття, підгрупу, коментар і стан публікації. Для захищених запитів виконайте <code>POST /api/v1/session</code>; клієнт зберігає отриманий cookie сеансу.</p></section>
+<section class="panel section"><div class="panel-heading"><h2>Маршрути</h2><p>Усі відповіді та помилки API мають формат JSON, крім успішного видалення (204).</p></div>
+<div class="api-table-wrap"><table class="api-table"><thead><tr><th>Метод</th><th>Адреса після /api/{version}</th><th>Призначення та доступ</th><th>Коди</th></tr></thead><tbody>
+<tr><td>POST</td><td>/session</td><td>Вхід за email і password</td><td>200, 400, 401, 415</td></tr>
+<tr><td>DELETE</td><td>/session</td><td>Вихід</td><td>204</td></tr>
+<tr><td>GET</td><td>/groups</td><td>Список груп</td><td>200</td></tr>
+<tr><td>GET</td><td>/subjects</td><td>Список предметів</td><td>200</td></tr>
+<tr><td>GET</td><td>/groups/{id}/lessons</td><td>Опубліковані пари групи</td><td>200, 404</td></tr>
+<tr><td>GET</td><td>/lessons/{id}</td><td>Одна пара</td><td>200, 404</td></tr>
+<tr><td>POST</td><td>/feedback</td><td>Створити відгук</td><td>201, 400, 415</td></tr>
+<tr><td>GET</td><td>/feedback</td><td>Усі відгуки · адміністратор</td><td>200, 401, 403</td></tr>
+<tr><td>POST</td><td>/lessons</td><td>Створити пару · адміністратор</td><td>201, 400, 401, 403, 409</td></tr>
+<tr><td>PATCH</td><td>/lessons/{id}</td><td>Змінити пару · адміністратор</td><td>200, 400, 401, 403, 404, 409</td></tr>
+<tr><td>DELETE</td><td>/lessons/{id}</td><td>Видалити пару · адміністратор</td><td>204, 401, 403, 404</td></tr>
+<tr><td>PUT</td><td>/lessons/{id}/comment</td><td>Зберегти коментар · викладач цієї пари</td><td>200, 201, 400, 401, 403, 404</td></tr>
+<tr><td>DELETE</td><td>/lessons/{id}/comment</td><td>Видалити коментар · викладач цієї пари</td><td>204, 401, 403, 404</td></tr>
+</tbody></table></div></section>
+<section class="panel"><div class="panel-heading"><h2>Приклад</h2></div><pre class="ocr-text">GET /api/v2/groups/1/lessons
+Accept: application/json
+
+HTTP/1.1 200 OK
+{"lessons": [{"id": 1, "group": "ІПЗ-21", "subject": "Основи програмування", "date": "2026-11-23", "pair_number": 1, "starts_at": "08:00", "ends_at": "09:20", "lesson_type": "", "subgroup": "", "comment": null}]}</pre><p class="muted">Дата у відповіді залежить від поточного тижня. Повна схема полів — у <a href="{{ url_for('openapi_spec') }}">openapi.json</a>.</p></section>
+{% endblock %}

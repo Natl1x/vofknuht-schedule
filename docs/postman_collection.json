@@ -1,0 +1,1271 @@
+{
+  "info": {
+    "name": "ВоФК НУХТ — лабораторна 05",
+    "description": "Run in order against a fresh demo database. Login stores a session cookie automatically.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:5000"
+    },
+    {
+      "key": "version",
+      "value": "v2"
+    },
+    {
+      "key": "lessonId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Groups — 200",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/groups",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "groups"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Groups — wrong method 405",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/groups",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "groups"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 405\", function () { pm.response.to.have.status(405); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Subjects — 200",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/subjects",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "subjects"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Subjects — wrong method 405",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/subjects",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "subjects"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 405\", function () { pm.response.to.have.status(405); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Group lessons — 200",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/groups/1/lessons",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "groups",
+            "1",
+            "lessons"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Group lessons — missing 404",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/groups/999/lessons",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "groups",
+            "999",
+            "lessons"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 404\", function () { pm.response.to.have.status(404); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lesson — 200",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/lessons/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "lessons",
+            "1"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lesson — missing 404",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/lessons/99999",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "lessons",
+            "99999"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 404\", function () { pm.response.to.have.status(404); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Feedback create — 201",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/feedback",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "feedback"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"API tester\",\n  \"email\": \"tester@example.com\",\n  \"message\": \"Перевірка API\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Feedback create — invalid 400",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/feedback",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "feedback"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"\",\n  \"email\": \"wrong\",\n  \"message\": \"\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 400\", function () { pm.response.to.have.status(400); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Feedback list — unauthorized 401",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/feedback",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "feedback"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 401\", function () { pm.response.to.have.status(401); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lesson create — unauthorized 401",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/lessons",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "lessons"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"group_id\": 1,\n  \"subject_id\": 1,\n  \"teacher_id\": 2,\n  \"classroom_id\": 1,\n  \"day_of_week\": 5,\n  \"pair_number\": 6,\n  \"lesson_type\": \"lab\",\n  \"subgroup\": \"2\",\n  \"is_published\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 401\", function () { pm.response.to.have.status(401); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Session — wrong password 401",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/session",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "session"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"admin@vofknuht.local\",\n  \"password\": \"wrong\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 401\", function () { pm.response.to.have.status(401); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Session — admin login 200",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/session",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "session"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"admin@vofknuht.local\",\n  \"password\": \"admin123\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Feedback list — admin 200",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/feedback",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "feedback"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lesson create — invalid 400",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/lessons",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "lessons"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"group_id\": 1,\n  \"subject_id\": 1,\n  \"teacher_id\": 2,\n  \"classroom_id\": 1,\n  \"day_of_week\": 5,\n  \"pair_number\": 7,\n  \"lesson_type\": \"lab\",\n  \"subgroup\": \"2\",\n  \"is_published\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 400\", function () { pm.response.to.have.status(400); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lesson create — 201",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/lessons",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "lessons"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"group_id\": 1,\n  \"subject_id\": 1,\n  \"teacher_id\": 2,\n  \"classroom_id\": 1,\n  \"day_of_week\": 5,\n  \"pair_number\": 6,\n  \"lesson_type\": \"lab\",\n  \"subgroup\": \"2\",\n  \"is_published\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });",
+              "pm.collectionVariables.set(\"lessonId\", pm.response.json().lesson.id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lesson create — conflict 409",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/lessons",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "lessons"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"group_id\": 1,\n  \"subject_id\": 1,\n  \"teacher_id\": 2,\n  \"classroom_id\": 1,\n  \"day_of_week\": 5,\n  \"pair_number\": 6,\n  \"lesson_type\": \"lab\",\n  \"subgroup\": \"2\",\n  \"is_published\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 409\", function () { pm.response.to.have.status(409); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lesson update — 200",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/lessons/{{lessonId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "lessons",
+            "{{lessonId}}"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"is_published\": false\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lesson update — missing 404",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/lessons/99999",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "lessons",
+            "99999"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"is_published\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 404\", function () { pm.response.to.have.status(404); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lesson delete — 204",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/lessons/{{lessonId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "lessons",
+            "{{lessonId}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 204\", function () { pm.response.to.have.status(204); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lesson delete — missing 404",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/lessons/{{lessonId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "lessons",
+            "{{lessonId}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 404\", function () { pm.response.to.have.status(404); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Session delete — 204",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/session",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "session"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 204\", function () { pm.response.to.have.status(204); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Session delete — wrong method 405",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/session",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "session"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 405\", function () { pm.response.to.have.status(405); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Comment create — unauthorized 401",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/lessons/1/comment",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "lessons",
+            "1",
+            "comment"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"body\": \"Тест\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 401\", function () { pm.response.to.have.status(401); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Session — teacher login 200",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/session",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "session"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"melnyk@vofknuht.local\",\n  \"password\": \"teacher123\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Comment create — invalid 400",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/lessons/1/comment",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "lessons",
+            "1",
+            "comment"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"body\": \"\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 400\", function () { pm.response.to.have.status(400); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Comment create — чужа пара 403",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/lessons/2/comment",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "lessons",
+            "2",
+            "comment"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"body\": \"Тест\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 403\", function () { pm.response.to.have.status(403); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Comment create — 201",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/lessons/1/comment",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "lessons",
+            "1",
+            "comment"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"body\": \"Візьміть ноутбуки\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Comment update — 200",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/lessons/1/comment",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "lessons",
+            "1",
+            "comment"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"body\": \"Візьміть зарядні пристрої\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Comment delete — 204",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/lessons/1/comment",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "lessons",
+            "1",
+            "comment"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 204\", function () { pm.response.to.have.status(204); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Comment delete — missing 404",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/lessons/1/comment",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "lessons",
+            "1",
+            "comment"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 404\", function () { pm.response.to.have.status(404); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
