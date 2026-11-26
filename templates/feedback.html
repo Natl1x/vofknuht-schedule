@@ -1,0 +1,4 @@
+{% extends 'base.html' %}{% block title %}Відгуки{% endblock %}{% block content %}
+<section class="page-heading"><p class="eyebrow">Зворотний зв’язок</p><h1>Відгуки</h1><p class="lead">Поділіться ідеєю або повідомте про помилку в розкладі.</p></section>
+<div class="grid two section"><form class="card form-card" method="post"><label>Ім’я<input name="name" required></label><label>Email<input type="email" name="email" required></label><label>Повідомлення<textarea name="message" rows="5" required></textarea></label><button class="button" type="submit">Надіслати</button></form><section>{% for item in feedbacks %}<article class="card feedback-item"><h2>{{ item['name'] }}</h2><p>{{ item['message'] }}</p><small>{{ item['created_at'] }}</small></article>{% else %}<p class="notice">Відгуків поки немає.</p>{% endfor %}</section></div>
+{% endblock %}

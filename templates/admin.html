@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Адмінпанель{% endblock %}
+{% block content %}
+  <section class="admin-hero">
+    <div><p class="eyebrow">Адміністрування</p><h1>Керування розкладом</h1><p>Заняття, викладачі та навчальні довідники</p></div>
+    <a class="button" href="{{ url_for('admin_schedule') }}">+ Додати пару</a>
+  </section>
+  {% include '_admin_nav.html' %}
+  <section class="metric-grid" aria-label="Статистика системи">
+    <article class="metric-card"><span>Пари</span><strong>{{ counts['schedule_entries'] }}</strong><a href="{{ url_for('admin_schedule') }}">Відкрити розклад →</a></article>
+    <article class="metric-card"><span>Викладачі</span><strong>{{ counts['users'] - 1 }}</strong><a href="{{ url_for('admin_teachers') }}">Керувати →</a></article>
+    <article class="metric-card"><span>Навчальні групи</span><strong>{{ counts['groups'] }}</strong><a href="{{ url_for('admin_catalog', kind='groups') }}">Керувати →</a></article>
+    <article class="metric-card"><span>Предмети</span><strong>{{ counts['subjects'] }}</strong><a href="{{ url_for('admin_catalog', kind='subjects') }}">Керувати →</a></article>
+    <article class="metric-card"><span>Аудиторії</span><strong>{{ counts['classrooms'] }}</strong><a href="{{ url_for('admin_catalog', kind='classrooms') }}">Керувати →</a></article>
+    <article class="metric-card"><span>Відгуки</span><strong>{{ counts['feedback'] }}</strong><a href="{{ url_for('admin_feedback') }}">Переглянути →</a></article>
+  </section>
+  <section class="quick-actions"><div><p class="eyebrow">Швидкий старт</p><h2>Що потрібно для нового заняття?</h2></div><ol><li>Створіть групу, предмет і аудиторію, якщо їх ще немає.</li><li>Додайте викладача та надайте йому початковий пароль.</li><li>Створіть пару й опублікуйте її для студентів.</li></ol></section>
+{% endblock %}

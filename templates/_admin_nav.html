@@ -1,0 +1,10 @@
+<nav class="admin-nav" aria-label="Розділи адмінпанелі">
+  <a href="{{ url_for('admin') }}" {% if request.endpoint == 'admin' %}aria-current="page"{% endif %}>Огляд</a>
+  <a href="{{ url_for('admin_schedule') }}" {% if request.endpoint in ('admin_schedule', 'delete_schedule') %}aria-current="page"{% endif %}>Розклад</a>
+  <a href="{{ url_for('admin_teachers') }}" {% if request.endpoint in ('admin_teachers', 'delete_teacher') %}aria-current="page"{% endif %}>Викладачі</a>
+  <a href="{{ url_for('admin_catalog', kind='groups') }}" {% if request.view_args and request.view_args.get('kind') == 'groups' %}aria-current="page"{% endif %}>Групи</a>
+  <a href="{{ url_for('admin_catalog', kind='subjects') }}" {% if request.view_args and request.view_args.get('kind') == 'subjects' %}aria-current="page"{% endif %}>Предмети</a>
+  <a href="{{ url_for('admin_catalog', kind='classrooms') }}" {% if request.view_args and request.view_args.get('kind') == 'classrooms' %}aria-current="page"{% endif %}>Аудиторії</a>
+  <a href="{{ url_for('admin_feedback') }}" {% if request.endpoint in ('admin_feedback', 'delete_feedback') %}aria-current="page"{% endif %}>Відгуки</a>
+  <a href="{{ url_for('admin_import') }}" {% if request.endpoint == 'admin_import' %}aria-current="page"{% endif %}>Імпорт фото</a>
+</nav>

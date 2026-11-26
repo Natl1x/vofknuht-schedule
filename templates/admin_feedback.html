@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block title %}Відгуки{% endblock %}
+{% block content %}
+  <section class="page-heading admin-heading"><p class="eyebrow">Адмінпанель / зворотний зв’язок</p><h1>Відгуки користувачів</h1><p class="lead">Переглядайте повідомлення та видаляйте неактуальні записи.</p></section>
+  {% include '_admin_nav.html' %}
+  <section class="panel feedback-panel"><div class="panel-heading"><h2>Усі повідомлення</h2><p>{{ feedbacks|length }} у списку</p></div>{% for item in feedbacks %}<article class="feedback-row"><div class="avatar">{{ item['name'][0] }}</div><div class="feedback-content"><div><strong>{{ item['name'] }}</strong><small>{{ item['email'] }} · {{ item['created_at'] }}</small></div><p>{{ item['message'] }}</p></div><form action="{{ url_for('delete_feedback', feedback_id=item['id']) }}" method="post"><button class="icon-button danger" type="submit">Видалити</button></form></article>{% else %}<p class="empty-state">Відгуків поки немає.</p>{% endfor %}</section>
+{% endblock %}
