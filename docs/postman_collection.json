@@ -382,7 +382,7 @@
       ]
     },
     {
-      "name": "Feedback list — unauthorized 401",
+      "name": "Feedback list — public 200",
       "request": {
         "method": "GET",
         "header": [],
@@ -404,13 +404,45 @@
           "script": {
             "type": "text/javascript",
             "exec": [
-              "pm.test(\"HTTP 401\", function () { pm.response.to.have.status(401); });",
-              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });",
+              "pm.test(\"Public list excludes email\", function () { pm.expect(pm.response.json().feedback[0]).to.not.have.property('email'); });"
             ]
           }
         }
       ]
     },
+    {
+      "name": "Feedback list — wrong method 405",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/{{version}}/feedback",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "{{version}}",
+            "feedback"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 405\", function () { pm.response.to.have.status(405); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    }
+    ,
     {
       "name": "Lesson create — unauthorized 401",
       "request": {

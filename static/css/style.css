@@ -189,6 +189,13 @@ time, .metric-card strong, .list-index, .time-pill { font-variant-numeric: tabul
 .row-actions a { padding: 8px 0; }
 .row-actions form { margin: 0; }
 .feedback-item { margin-bottom: 16px; overflow-wrap: anywhere; }
+.feedback-list-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 16px; }
+.feedback-status { padding: 10px 12px; border-radius: 8px; font-size: 14px; }
+.feedback-status.success { background: var(--success-bg); color: var(--success-text); }
+.feedback-status.error { background: var(--error-bg); color: var(--error-text); }
+.feedback-status[hidden], #feedback-loading[hidden] { display: none; }
+.feedback-layout .form-card .panel-heading p { color: var(--muted); }
+.feedback-layout button:disabled { opacity: .65; cursor: wait; }
 .feedback-item small { display: block; margin-top: 12px; }
 .feedback-row { display: flex; align-items: start; gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--line); }
 .feedback-row:last-child { border-bottom: 0; }

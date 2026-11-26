@@ -150,8 +150,10 @@ def create_feedback(version):
     if failure: return failure
     if set(data) != {"name", "email", "message"} or any(not isinstance(v, str) or not v.strip() for v in data.values()):
         return error("Потрібні непорожні рядки name, email і message.", 400)
-    if "@" not in data["email"] or len(data["message"]) > 5000:
-        return error("Некоректний email або надто довге повідомлення.", 400)
+    if (len(data["name"].strip()) < 2 or len(data["name"]) > 100 or
+            "@" not in data["email"] or len(data["email"]) > 254 or
+            len(data["message"]) > 5000):
+        return error("Перевірте ім’я, email і довжину повідомлення.", 400)
     db = get_db()
     cursor = db.execute("INSERT INTO feedback(name,email,message) VALUES(?,?,?)", tuple(data[k].strip() for k in ("name", "email", "message")))
     db.commit()
@@ -160,8 +162,11 @@ def create_feedback(version):
 
 @api.get("/feedback")
 def list_feedback(version):
-    if failure := user_with_role("admin"): return failure
-    return jsonify(feedback=[dict(row) for row in get_db().execute("SELECT * FROM feedback ORDER BY id DESC")])
+    if g.user and g.user["role"] == "admin":
+        rows = get_db().execute("SELECT * FROM feedback ORDER BY id DESC")
+    else:
+        rows = get_db().execute("SELECT id,name,message,created_at FROM feedback ORDER BY id DESC")
+    return jsonify(feedback=[dict(row) for row in rows])
 
 
 @api.post("/lessons")

@@ -12,7 +12,7 @@
 <tr><td>GET</td><td>/groups/{id}/lessons</td><td>Опубліковані пари групи</td><td>200, 404</td></tr>
 <tr><td>GET</td><td>/lessons/{id}</td><td>Одна пара</td><td>200, 404</td></tr>
 <tr><td>POST</td><td>/feedback</td><td>Створити відгук</td><td>201, 400, 415</td></tr>
-<tr><td>GET</td><td>/feedback</td><td>Усі відгуки · адміністратор</td><td>200, 401, 403</td></tr>
+<tr><td>GET</td><td>/feedback</td><td>Відгуки; email доступний лише адміністратору</td><td>200</td></tr>
 <tr><td>POST</td><td>/lessons</td><td>Створити пару · адміністратор</td><td>201, 400, 401, 403, 409</td></tr>
 <tr><td>PATCH</td><td>/lessons/{id}</td><td>Змінити пару · адміністратор</td><td>200, 400, 401, 403, 404, 409</td></tr>
 <tr><td>DELETE</td><td>/lessons/{id}</td><td>Видалити пару · адміністратор</td><td>204, 401, 403, 404</td></tr>

@@ -40,14 +40,16 @@ class ApiTests(unittest.TestCase):
         self.assertIn("paths", self.client.get("/openapi.json").json)
 
     def test_feedback_validation_and_admin_access(self):
-        self.assertEqual(self.client.get("/api/v1/feedback").status_code, 401)
+        self.assertEqual(self.client.get("/api/v1/feedback").json["feedback"], [])
         self.assertEqual(self.client.post("/api/v1/feedback", json={"name": "A"}).status_code, 400)
         created = self.client.post("/api/v1/feedback", json={"name": "Марія", "email": "m@example.com", "message": "Уточніть пару"})
         self.assertEqual(created.status_code, 201)
+        self.assertNotIn("email", self.client.get("/api/v1/feedback").json["feedback"][0])
         self.login("teacher")
-        self.assertEqual(self.client.get("/api/v1/feedback").status_code, 403)
+        self.assertNotIn("email", self.client.get("/api/v1/feedback").json["feedback"][0])
         self.login("admin")
         self.assertEqual(self.client.get("/api/v1/feedback").json["feedback"][0]["message"], "Уточніть пару")
+        self.assertEqual(self.client.get("/api/v1/feedback").json["feedback"][0]["email"], "m@example.com")
 
     def test_admin_lesson_crud_conflicts_and_publication(self):
         payload = dict(group_id=1, subject_id=1, teacher_id=2, classroom_id=1,
