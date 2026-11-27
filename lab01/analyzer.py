@@ -1,6 +1,7 @@
 """Обробка даних пасажирських рейсів для лабораторної роботи №1."""
 
 import csv
+import math
 from datetime import date
 from pathlib import Path
 from statistics import median
@@ -27,7 +28,13 @@ def read_flights(path: Path) -> tuple[list[dict], list[str]]:
                 price = float((row["ticket_price"] or "").strip())
                 if not number or not direction:
                     raise ValueError("порожній номер рейсу або напрямок")
-                if capacity <= 0 or passengers < 0 or passengers > capacity or price < 0:
+                if (
+                    capacity <= 0
+                    or passengers < 0
+                    or passengers > capacity
+                    or not math.isfinite(price)
+                    or price < 0
+                ):
                     raise ValueError("пасажири, місткість або ціна поза допустимими межами")
             except (ValueError, TypeError, OverflowError) as error:
                 warnings.append(f"Рядок {line_number} пропущено: {error}")

@@ -31,13 +31,14 @@ class FlightAnalysisTests(unittest.TestCase):
         self.assertEqual(occupancy_category(flights[6]), "низька")
 
     def test_invalid_rows_are_skipped(self):
-        """Пропустити порожнє, нечислове та завелике значення без падіння."""
+        """Пропустити порожнє, нечислове, завелике та нескінченне значення."""
         csv_text = (
             "flight_number,date,direction,passengers,capacity,ticket_price\n"
             "1,2026-11-01,Луцьк — Київ, 8 ,10,100\n"
             "2,2026-11-02,Луцьк — Київ,,10,100\n"
             "3,2026-11-03,Луцьк — Київ,abc,10,100\n"
             "4,2026-11-04,Луцьк — Київ,11,10,100\n"
+            "5,2026-11-05,Луцьк — Київ,8,10,nan\n"
         )
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "flights.csv"
@@ -45,7 +46,7 @@ class FlightAnalysisTests(unittest.TestCase):
             flights, warnings = read_flights(path)
         self.assertEqual(len(flights), 1)
         self.assertEqual(flights[0]["passengers"], 8)
-        self.assertEqual(len(warnings), 3)
+        self.assertEqual(len(warnings), 4)
 
 
 if __name__ == "__main__":
