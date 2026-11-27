@@ -1,51 +1,106 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block title %}Розклад{% endblock %}
 {% block content %}
-  <div class="page-heading schedule-heading">
-    <p class="eyebrow">Навчальний розклад</p>
-    <h1>{% if selected_group %}Розклад групи {% for group in groups if group['id'] == selected_group %}{{ group['name'] }}{% endfor %}{% else %}Розклад занять{% endif %}</h1>
-    <p class="lead">{% if schedule_days %}Тиждень {{ schedule_days[0]['date'].strftime('%d.%m') }}–{{ schedule_days[-1]['date'].strftime('%d.%m.%Y') }}. Оберіть день, щоб перейти до його занять.{% else %}Оберіть свою групу, щоб побачити заняття, аудиторії та коментарі викладачів.{% endif %}</p>
-  </div>
-  <div class="schedule-toolbar">
-  <form class="group-picker" method="get">
-    <label for="group">Навчальна група</label>
-    <select id="group" name="group" onchange="this.form.submit()">
-      <option value="" disabled {% if not selected_group %}selected{% endif %}>Оберіть групу зі списку</option>
-      {% for group in groups %}<option value="{{ group['id'] }}" {% if group['id'] == selected_group %}selected{% endif %}>{{ group['name'] }}</option>{% endfor %}
-    </select>
-    <noscript><button class="button" type="submit">Відкрити розклад</button></noscript>
-  </form>
-  {% if selected_group %}
-    <a class="calendar-link" href="{{ url_for('calendar_export', group_id=selected_group) }}">Завантажити календар (.ics) <span aria-hidden="true">↓</span></a>
-  {% else %}<p class="toolbar-hint">Оберіть групу — розклад відкриється автоматично</p>{% endif %}
-  </div>
-  {% if selected_group %}
-    <nav class="week-nav" aria-label="Перейти до дня тижня">
-      {% for day in schedule_days %}
-        <a href="#day-{{ loop.index }}" {% if day['date'] == today %}class="is-today" aria-current="date"{% endif %}><span>{{ day['name'] }}</span><strong>{{ day['date'].strftime('%d.%m') }}</strong>{% if day['date'] == today %}<small>Сьогодні</small>{% else %}<small>Занять: {{ day['entries']|length }}</small>{% endif %}</a>
-      {% endfor %}
-    </nav>
-    <section class="weekly-schedule" aria-label="Розклад на навчальний тиждень">
-      {% for day in schedule_days %}
-        <article id="day-{{ loop.index }}" class="schedule-day{% if day['date'] == today %} is-today{% endif %}">
-          <header class="schedule-day-heading">
-            <div><h2>{{ day['name'] }}</h2><time datetime="{{ day['date'].isoformat() }}">{{ day['date'].strftime('%d.%m.%Y') }}</time></div>
-            {% if day['date'] == today %}<span class="today-label">Сьогодні</span>{% else %}<span class="day-count">Занять: {{ day['entries']|length }}</span>{% endif %}
-          </header>
-          <div class="lesson-list">
-            {% for lesson in day['entries'] %}
-              <article class="schedule-lesson">
-                <div class="lesson-time"><strong>{{ lesson['pair_number'] }}</strong><span>пара</span><time>{{ lesson['starts_at'] }}–{{ lesson['ends_at'] }}</time></div>
-                <div class="lesson-details"><h3>{{ lesson['subject_name'] }}</h3>{% include '_lesson_attributes.html' %}<p>{{ lesson['teacher_name'] }} · ауд. {{ lesson['classroom_name'] }}</p>{% if lesson['comment'] %}<p class="comment"><strong>Коментар викладача:</strong> {{ lesson['comment'] }}</p>{% endif %}</div>
-              </article>
-            {% else %}<p class="day-empty">Занять немає.</p>
+    <div class="page-heading schedule-heading">
+        <p class="eyebrow">Навчальний розклад</p>
+        <h1>
+            {% if selected_group %}
+                Розклад групи
+                {% for group in groups if group['id'] == selected_group %}
+                    {{ group['name'] }}
+                {% endfor %}
+            {% else %}
+                Розклад занять
+            {% endif %}
+        </h1>
+        <p class="lead">
+            {% if schedule_days %}
+                Тиждень {{ schedule_days[0]['date'].strftime("%d.%m") }}–{{ schedule_days[-1]['date'].strftime("%d.%m.%Y") }}. Оберіть день, щоб перейти до його занять.
+            {% else %}
+                Оберіть свою групу, щоб побачити заняття, аудиторії та коментарі викладачів.
+            {% endif %}
+        </p>
+    </div>
+    <div class="schedule-toolbar">
+        <form class="group-picker" method="get">
+            <label for="group">Навчальна група</label>
+            <select id="group" name="group" onchange="this.form.submit()">
+                <option value=""
+                        disabled
+                        {% if not selected_group %} selected {% endif %}>Оберіть групу зі списку</option>
+                {% for group in groups %}
+                    <option value="{{ group['id'] }}"
+                            {% if group['id'] == selected_group %} selected {% endif %}>{{ group['name'] }}</option>
+                {% endfor %}
+            </select>
+            <noscript>
+                <button class="button" type="submit">Відкрити розклад</button>
+            </noscript>
+        </form>
+        {% if selected_group %}
+            <a class="calendar-link"
+               href="{{ url_for('calendar_export', group_id=selected_group) }}">Завантажити календар (.ics) <span aria-hidden="true">↓</span></a>
+        {% else %}
+            <p class="toolbar-hint">Оберіть групу — розклад відкриється автоматично</p>
+        {% endif %}
+    </div>
+    {% if selected_group %}
+        <nav class="week-nav" aria-label="Перейти до дня тижня">
+            {% for day in schedule_days %}
+                <a href="#day-{{ loop.index }}"
+                   {% if day['date'] == today %} class="is-today" aria-current="date" {% endif %}><span>{{ day['name'] }}</span><strong>{{ day['date'].strftime("%d.%m") }}</strong>
+                    {% if day["date"] == today %}
+                        <small>Сьогодні</small>
+                    {% else %}
+                        <small>Занять: {{ day['entries']|length }}</small>
+                    {% endif %}
+                </a>
             {% endfor %}
-          </div>
-        </article>
-      {% endfor %}
-    </section>
-  {% else %}
-    <section class="selection-empty"><h2>Розклад з’явиться тут</h2><p>Виберіть групу у списку вище — її заняття завантажаться автоматично</p></section>
-  {% endif %}
-  <p class="bottom-note">Маєш питання? Скористайся формою <a href="{{ url_for('feedback') }}">зворотного зв’язку →</a></p>
+        </nav>
+        <section class="weekly-schedule" aria-label="Розклад на навчальний тиждень">
+            {% for day in schedule_days %}
+                <article id="day-{{ loop.index }}"
+                         class="schedule-day {% if day['date'] == today %} is-today {% endif %}">
+                    <header class="schedule-day-heading">
+                        <div>
+                            <h2>{{ day['name'] }}</h2>
+                            <time datetime="{{ day['date'].isoformat() }}">{{ day['date'].strftime("%d.%m.%Y") }}</time>
+                        </div>
+                        {% if day["date"] == today %}
+                            <span class="today-label">Сьогодні</span>
+                        {% else %}
+                            <span class="day-count">Занять: {{ day['entries']|length }}</span>
+                        {% endif %}
+                    </header>
+                    <div class="lesson-list">
+                        {% for lesson in day['entries'] %}
+                            <article class="schedule-lesson">
+                                <div class="lesson-time">
+                                    <strong>{{ lesson['pair_number'] }}</strong>
+                                    <span>пара</span>
+                                    <time>{{ lesson['starts_at'] }}–{{ lesson['ends_at'] }}</time>
+                                </div>
+                                <div class="lesson-details">
+                                    <h3>{{ lesson['subject_name'] }}</h3>
+                                    {% include "_lesson_attributes.html" %}
+                                    <p>{{ lesson['teacher_name'] }} · ауд. {{ lesson['classroom_name'] }}</p>
+                                    {% if lesson["comment"] %}
+                                        <p class="comment"><strong>Коментар викладача:</strong> {{ lesson['comment'] }}</p>
+                                    {% endif %}
+                                </div>
+                            </article>
+                        {% else %}
+                            <p class="day-empty">Занять немає.</p>
+                        {% endfor %}
+                    </div>
+                </article>
+            {% endfor %}
+        </section>
+    {% else %}
+        <section class="selection-empty">
+            <h2>Розклад з’явиться тут</h2>
+            <p>Виберіть групу у списку вище — її заняття завантажаться автоматично</p>
+        </section>
+    {% endif %}
+    <p class="bottom-note">Маєш питання? Скористайся формою <a href="{{ url_for('feedback') }}">зворотного зв’язку →</a></p>
 {% endblock %}

@@ -16,9 +16,14 @@
     if (!button) return;
     const isDark = theme === "dark";
     button.setAttribute("aria-pressed", String(isDark));
-    button.setAttribute("aria-label", isDark ? "Увімкнути світлу тему" : "Увімкнути темну тему");
+    button.setAttribute(
+      "aria-label",
+      isDark ? "Увімкнути світлу тему" : "Увімкнути темну тему",
+    );
     button.title = button.getAttribute("aria-label");
-    button.querySelector(".theme-label").textContent = isDark ? "Світла" : "Темна";
+    button.querySelector(".theme-label").textContent = isDark
+      ? "Світла"
+      : "Темна";
   }
 
   // Run in <head>, before styles paint, to avoid flashing the light theme.

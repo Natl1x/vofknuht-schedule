@@ -1,4 +1,37 @@
-{% extends 'base.html' %}{% block title %}Кабінет викладача{% endblock %}{% block content %}
-<section class="page-heading"><p class="eyebrow">Кабінет викладача</p><h1>Мої заняття</h1><p class="lead">Додавайте важливі повідомлення лише до пар, які закріплено за вами.</p></section>
-<section class="grid two section">{% for lesson in lessons %}<article class="card"><span class="number">{{ days[lesson['day_of_week']] }} · {{ lesson['pair_number'] }} пара</span><h2>{{ lesson['subject_name'] }}</h2>{% include '_lesson_attributes.html' %}<p>{{ lesson['group_name'] }} · {{ lesson['starts_at'] }}–{{ lesson['ends_at'] }} · ауд. {{ lesson['classroom_name'] }}</p><form class="form-card" action="{{ url_for('save_comment', lesson_id=lesson['id']) }}" method="post"><label for="comment-{{ lesson['id'] }}">Коментар для студентів</label><textarea id="comment-{{ lesson['id'] }}" name="body" rows="3" required>{{ lesson['comment'] or '' }}</textarea><button class="button" type="submit">Зберегти коментар</button></form>{% if lesson['comment'] %}<form action="{{ url_for('delete_comment', lesson_id=lesson['id']) }}" method="post"><button class="text-button danger" type="submit">Видалити коментар</button></form>{% endif %}</article>{% else %}<p class="notice">Адміністратор ще не закріпив за вами заняття.</p>{% endfor %}</section>
+{% extends "base.html" %}
+{% block title %}Кабінет викладача{% endblock %}
+{% block content %}
+    <section class="page-heading">
+        <p class="eyebrow">Кабінет викладача</p>
+        <h1>Мої заняття</h1>
+        <p class="lead">Додавайте важливі повідомлення лише до пар, які закріплено за вами.</p>
+    </section>
+    <section class="grid two section">
+        {% for lesson in lessons %}
+            <article class="card">
+                <span class="number">{{ days[lesson['day_of_week']] }} · {{ lesson['pair_number'] }} пара</span>
+                <h2>{{ lesson['subject_name'] }}</h2>
+                {% include "_lesson_attributes.html" %}
+                <p>{{ lesson['group_name'] }} · {{ lesson['starts_at'] }}–{{ lesson['ends_at'] }} · ауд. {{ lesson['classroom_name'] }}</p>
+                <form class="form-card"
+                      action="{{ url_for('save_comment', lesson_id=lesson['id']) }}"
+                      method="post">
+                    <label for="comment-{{ lesson['id'] }}">Коментар для студентів</label>
+                    <textarea id="comment-{{ lesson['id'] }}"
+                              name="body"
+                              rows="3"
+                              required>{{ lesson['comment'] or '' }}</textarea>
+                    <button class="button" type="submit">Зберегти коментар</button>
+                </form>
+                {% if lesson["comment"] %}
+                    <form action="{{ url_for('delete_comment', lesson_id=lesson['id']) }}"
+                          method="post">
+                        <button class="text-button danger" type="submit">Видалити коментар</button>
+                    </form>
+                {% endif %}
+            </article>
+        {% else %}
+            <p class="notice">Адміністратор ще не закріпив за вами заняття.</p>
+        {% endfor %}
+    </section>
 {% endblock %}

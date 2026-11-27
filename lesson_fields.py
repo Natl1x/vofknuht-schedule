@@ -1,4 +1,5 @@
 """Окремі характеристики заняття та розбір старих назв дисциплін."""
+
 import re
 
 LESSON_TYPES = {
@@ -15,7 +16,8 @@ def split_subject_name(name):
     name = " ".join(name.split())
     match = re.fullmatch(
         r"(.+?)\s*\((лр|л\.?|пр\.?)\s*(\d|[iі]{1,3})?\)",
-        name, flags=re.IGNORECASE,
+        name,
+        flags=re.IGNORECASE,
     )
     if not match:
         return name, "", ""

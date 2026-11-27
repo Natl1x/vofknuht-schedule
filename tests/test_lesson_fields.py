@@ -1,4 +1,5 @@
 """Міграція назв дисциплін не повинна втрачати заняття або коментарі."""
+
 import sqlite3
 import unittest
 
@@ -32,23 +33,43 @@ class LessonFieldMigrationTests(unittest.TestCase):
         """)
         with db:
             migrate_lesson_fields(db)
-        rows = [tuple(row) for row in db.execute(
-            "SELECT id, subject_id, lesson_type, subgroup FROM schedule_entries ORDER BY id"
-        )]
-        self.assertEqual(rows[:4], [
-            (1, 4, "lab", "1"), (2, 4, "lab", "2"),
-            (3, 4, "lecture", ""), (4, 5, "practice", "2"),
-        ])
+        rows = [
+            tuple(row)
+            for row in db.execute(
+                "SELECT id, subject_id, lesson_type, subgroup FROM schedule_entries ORDER BY id"
+            )
+        ]
+        self.assertEqual(
+            rows[:4],
+            [
+                (1, 4, "lab", "1"),
+                (2, 4, "lab", "2"),
+                (3, 4, "lecture", ""),
+                (4, 5, "practice", "2"),
+            ],
+        )
         self.assertEqual(db.execute("SELECT count(*) FROM subjects").fetchone()[0], 3)
-        self.assertEqual(db.execute("SELECT body FROM comments").fetchone()[0], "Принести ноутбуки")
+        self.assertEqual(
+            db.execute("SELECT body FROM comments").fetchone()[0], "Принести ноутбуки"
+        )
         self.assertEqual(db.execute("PRAGMA foreign_key_check").fetchall(), [])
         with db:
             migrate_lesson_fields(db)
-        self.assertEqual(rows, [tuple(row) for row in db.execute(
-            "SELECT id, subject_id, lesson_type, subgroup FROM schedule_entries ORDER BY id"
-        )])
+        self.assertEqual(
+            rows,
+            [
+                tuple(row)
+                for row in db.execute(
+                    "SELECT id, subject_id, lesson_type, subgroup FROM schedule_entries ORDER BY id"
+                )
+            ],
+        )
 
     def test_unknown_parenthetical_names_are_not_truncated(self):
-        self.assertEqual(split_subject_name("Алгебра (поглиблена)"), ("Алгебра (поглиблена)", "", ""))
-        self.assertEqual(split_subject_name("Програмування (ЛР 2)"), ("Програмування", "lab", "2"))
+        self.assertEqual(
+            split_subject_name("Алгебра (поглиблена)"), ("Алгебра (поглиблена)", "", "")
+        )
+        self.assertEqual(
+            split_subject_name("Програмування (ЛР 2)"), ("Програмування", "lab", "2")
+        )
         self.assertEqual(split_subject_name("Мова (пр. ІІ)"), ("Мова", "practice", "2"))

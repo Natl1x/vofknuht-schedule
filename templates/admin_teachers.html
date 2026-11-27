@@ -1,7 +1,57 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block title %}Викладачі{% endblock %}
 {% block content %}
-  <section class="page-heading admin-heading"><p class="eyebrow">Адмінпанель / користувачі</p><h1>Викладачі</h1><p class="lead">Створюйте службові акаунти. Викладач бачитиме лише закріплені за ним пари.</p></section>
-  {% include '_admin_nav.html' %}
-  <div class="admin-layout"><form class="panel form-card" method="post"><div class="panel-heading"><h2>Новий акаунт</h2><p>Передайте пароль викладачеві безпечним способом.</p></div><label>ПІБ<input name="full_name" placeholder="Наприклад, Олена Мельник" required></label><label>Email<input type="email" name="email" placeholder="name@vofknuht.local" required></label><label>Початковий пароль<input type="password" name="password" minlength="6" placeholder="Щонайменше 6 символів" required></label><button class="button" type="submit">Створити акаунт</button></form><section class="panel"><div class="panel-heading"><h2>Усі викладачі</h2><p>{{ teachers|length }} активних акаунтів</p></div><div class="data-list">{% for teacher in teachers %}<article class="data-row"><div class="avatar">{{ teacher['full_name'][0] }}</div><div><strong>{{ teacher['full_name'] }}</strong><small>{{ teacher['email'] }}</small></div><form action="{{ url_for('delete_teacher', user_id=teacher['id']) }}" method="post"><button class="icon-button danger" type="submit" aria-label="Видалити {{ teacher['full_name'] }}">Видалити</button></form></article>{% else %}<p class="empty-state">Ще немає акаунтів викладачів.</p>{% endfor %}</div></section></div>
+    <section class="page-heading admin-heading">
+        <p class="eyebrow">Адмінпанель / користувачі</p>
+        <h1>Викладачі</h1>
+        <p class="lead">Створюйте службові акаунти. Викладач бачитиме лише закріплені за ним пари.</p>
+    </section>
+    {% include "_admin_nav.html" %}
+    <div class="admin-layout">
+        <form class="panel form-card" method="post">
+            <div class="panel-heading">
+                <h2>Новий акаунт</h2>
+                <p>Передайте пароль викладачеві безпечним способом.</p>
+            </div>
+            <label>
+                ПІБ<input name="full_name" placeholder="Наприклад, Олена Мельник" required>
+            </label>
+            <label>
+                Email<input type="email" name="email" placeholder="name@vofknuht.local" required>
+            </label>
+            <label>
+                Початковий пароль<input type="password"
+                                        name="password"
+                                        minlength="6"
+                                        placeholder="Щонайменше 6 символів"
+                                        required>
+            </label>
+            <button class="button" type="submit">Створити акаунт</button>
+        </form>
+        <section class="panel">
+            <div class="panel-heading">
+                <h2>Усі викладачі</h2>
+                <p>{{ teachers|length }} активних акаунтів</p>
+            </div>
+            <div class="data-list">
+                {% for teacher in teachers %}
+                    <article class="data-row">
+                        <div class="avatar">{{ teacher['full_name'][0] }}</div>
+                        <div>
+                            <strong>{{ teacher['full_name'] }}</strong>
+                            <small>{{ teacher['email'] }}</small>
+                        </div>
+                        <form action="{{ url_for('delete_teacher', user_id=teacher['id']) }}"
+                              method="post">
+                            <button class="icon-button danger"
+                                    type="submit"
+                                    aria-label="Видалити {{ teacher['full_name'] }}">Видалити</button>
+                        </form>
+                    </article>
+                {% else %}
+                    <p class="empty-state">Ще немає акаунтів викладачів.</p>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
 {% endblock %}

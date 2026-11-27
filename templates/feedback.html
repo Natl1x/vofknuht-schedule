@@ -1,31 +1,66 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block title %}Відгуки{% endblock %}
 {% block content %}
-  <section class="page-heading">
-    <p class="eyebrow">Зворотний зв’язок</p>
-    <h1>Відгуки</h1>
-    <p class="lead">Поділіться ідеєю або повідомте про помилку в розкладі.</p>
-  </section>
-  <div class="grid two section feedback-layout">
-    <form id="feedback-form" class="card form-card" method="post" data-api-url="{{ url_for('api.list_feedback', version='v2') }}">
-      <div class="panel-heading"><h2>Написати відгук</h2><p>Ваш email бачить лише адміністратор.</p></div>
-      <label for="feedback-name">Ім’я<input id="feedback-name" name="name" autocomplete="name" minlength="2" maxlength="100" required></label>
-      <label for="feedback-email">Email<input id="feedback-email" type="email" name="email" autocomplete="email" maxlength="254" required></label>
-      <label for="feedback-message">Повідомлення<textarea id="feedback-message" name="message" rows="5" maxlength="5000" required></textarea></label>
-      <p id="feedback-status" class="feedback-status" aria-live="polite" hidden></p>
-      <button class="button" type="submit">Надіслати</button>
-    </form>
-    <section aria-labelledby="feedback-list-title">
-      <div class="feedback-list-heading"><h2 id="feedback-list-title">Повідомлення</h2><span id="feedback-count" class="muted">{{ feedbacks|length }}</span></div>
-      <p id="feedback-loading" class="muted" role="status" hidden>Завантажуємо відгуки…</p>
-      <div id="feedback-list" aria-live="polite">
-        {% for item in feedbacks %}
-          <article class="card feedback-item"><h3>{{ item['name'] }}</h3><p>{{ item['message'] }}</p><small>{{ item['created_at'] }}</small></article>
-        {% else %}
-          <p class="notice">Відгуків поки немає.</p>
-        {% endfor %}
-      </div>
+    <section class="page-heading">
+        <p class="eyebrow">Зворотний зв’язок</p>
+        <h1>Відгуки</h1>
+        <p class="lead">Поділіться ідеєю або повідомте про помилку в розкладі.</p>
     </section>
-  </div>
-  <script src="{{ url_for('static', filename='js/feedback.js') }}" defer></script>
+    <div class="grid two section feedback-layout">
+        <form id="feedback-form"
+              class="card form-card"
+              method="post"
+              data-api-url="{{ url_for('api.list_feedback', version='v2') }}">
+            <div class="panel-heading">
+                <h2>Написати відгук</h2>
+                <p>Ваш email бачить лише адміністратор.</p>
+            </div>
+            <label for="feedback-name">
+                Ім’я<input id="feedback-name"
+                           name="name"
+                           autocomplete="name"
+                           minlength="2"
+                           maxlength="100"
+                           required>
+            </label>
+            <label for="feedback-email">
+                Email<input id="feedback-email"
+                            type="email"
+                            name="email"
+                            autocomplete="email"
+                            maxlength="254"
+                            required>
+            </label>
+            <label for="feedback-message">
+                Повідомлення<textarea id="feedback-message"
+                                      name="message"
+                                      rows="5"
+                                      maxlength="5000"
+                                      required></textarea>
+            </label>
+            <p id="feedback-status"
+               class="feedback-status"
+               aria-live="polite"
+               hidden></p>
+            <button class="button" type="submit">Надіслати</button>
+        </form>
+        <section aria-labelledby="feedback-list-title">
+            <div class="feedback-list-heading">
+                <h2 id="feedback-list-title">Повідомлення</h2>
+                <span id="feedback-count" class="muted">{{ feedbacks|length }}</span>
+            </div>
+            <p id="feedback-loading" class="muted" role="status" hidden>Завантажуємо відгуки…</p>
+            <div id="feedback-list" aria-live="polite">
+                {% for item in feedbacks %}
+                    <article class="card feedback-item">
+                        <h3>{{ item['name'] }}</h3>
+                        <p>{{ item['message'] }}</p>
+                        <small>{{ item['created_at'] }}</small></article>
+                {% else %}
+                    <p class="notice">Відгуків поки немає.</p>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+    <script src="{{ url_for('static', filename='js/feedback.js') }}" defer></script>
 {% endblock %}
