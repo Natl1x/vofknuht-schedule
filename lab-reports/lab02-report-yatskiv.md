@@ -23,7 +23,7 @@ git status
 
 ## Внесок і Git workflow
 
-Усі наявні модулі проєкту створено та супроводжено в цьому репозиторії. Для лабораторної №2 додано цей звіт, [CHANGELOG](../CHANGELOG.md) і відтворювану вправу з конфліктом. Робота відстежується у [GitHub Issue №1](https://github.com/Natl1x/vofknuht-schedule/issues/1) та виконується в гілці [`feature/lab02-git-workflow`](https://github.com/Natl1x/vofknuht-schedule/tree/feature/lab02-git-workflow). Лабораторна №1, варіант 10, розміщена в [окремому репозиторії](https://github.com/Natl1x/course-opi-lab01-variant10). Рецензію іншого учасника не можна замінити самостійним злиттям.
+Усі наявні модулі проєкту створено та супроводжено в цьому репозиторії. Для лабораторної №2 додано цей звіт, [CHANGELOG](../CHANGELOG.md) і відтворювану вправу з конфліктом. Робота відстежується у [GitHub Issue №1](https://github.com/Natl1x/vofknuht-schedule/issues/1), виконана в гілці [`feature/lab02-git-workflow`](https://github.com/Natl1x/vofknuht-schedule/tree/feature/lab02-git-workflow) і подана як [чернетка PR №3](https://github.com/Natl1x/vofknuht-schedule/pull/3). Лабораторна №1, варіант 10, розміщена в [окремому репозиторії](https://github.com/Natl1x/course-opi-lab01-variant10). Рецензію іншого учасника не можна замінити самостійним злиттям.
 
 Конфлікт злиття відтворено скриптом [conflict_demo.py](../lab02/conflict_demo.py) у тимчасовому репозиторії. Він створює гілки `feature/left` і `feature/right`, змінює однаковий рядок README, зливає першу гілку, отримує конфлікт під час злиття другої та зберігає обидві зміни у розв'язанні. Тимчасовий репозиторій видаляється після запуску; історія основного проєкту від вправи не змінюється.
 
