@@ -1,0 +1,112 @@
+[
+  {
+    "flight_number": "109",
+    "date": "2026-11-10",
+    "direction": "Луцьк — Київ",
+    "passengers": 50,
+    "capacity": 50,
+    "ticket_price": 470.0,
+    "revenue": 23500.0,
+    "occupancy_percent": 100.0,
+    "occupancy_category": "висока"
+  },
+  {
+    "flight_number": "103",
+    "date": "2026-11-04",
+    "direction": "Луцьк — Київ",
+    "passengers": 48,
+    "capacity": 50,
+    "ticket_price": 450.0,
+    "revenue": 21600.0,
+    "occupancy_percent": 96.0,
+    "occupancy_category": "висока"
+  },
+  {
+    "flight_number": "106",
+    "date": "2026-11-07",
+    "direction": "Луцьк — Київ",
+    "passengers": 45,
+    "capacity": 50,
+    "ticket_price": 470.0,
+    "revenue": 21150.0,
+    "occupancy_percent": 90.0,
+    "occupancy_category": "висока"
+  },
+  {
+    "flight_number": "101",
+    "date": "2026-11-02",
+    "direction": "Луцьк — Київ",
+    "passengers": 42,
+    "capacity": 50,
+    "ticket_price": 450.0,
+    "revenue": 18900.0,
+    "occupancy_percent": 84.0,
+    "occupancy_category": "середня"
+  },
+  {
+    "flight_number": "105",
+    "date": "2026-11-06",
+    "direction": "Луцьк — Львів",
+    "passengers": 39,
+    "capacity": 40,
+    "ticket_price": 320.0,
+    "revenue": 12480.0,
+    "occupancy_percent": 97.5,
+    "occupancy_category": "висока"
+  },
+  {
+    "flight_number": "108",
+    "date": "2026-11-09",
+    "direction": "Луцьк — Львів",
+    "passengers": 37,
+    "capacity": 40,
+    "ticket_price": 330.0,
+    "revenue": 12210.0,
+    "occupancy_percent": 92.5,
+    "occupancy_category": "висока"
+  },
+  {
+    "flight_number": "102",
+    "date": "2026-11-03",
+    "direction": "Луцьк — Львів",
+    "passengers": 35,
+    "capacity": 40,
+    "ticket_price": 320.0,
+    "revenue": 11200.0,
+    "occupancy_percent": 87.5,
+    "occupancy_category": "середня"
+  },
+  {
+    "flight_number": "110",
+    "date": "2026-11-11",
+    "direction": "Луцьк — Рівне",
+    "passengers": 24,
+    "capacity": 30,
+    "ticket_price": 190.0,
+    "revenue": 4560.0,
+    "occupancy_percent": 80.0,
+    "occupancy_category": "середня"
+  },
+  {
+    "flight_number": "104",
+    "date": "2026-11-05",
+    "direction": "Луцьк — Рівне",
+    "passengers": 20,
+    "capacity": 30,
+    "ticket_price": 180.0,
+    "revenue": 3600.0,
+    "occupancy_percent": 66.7,
+    "occupancy_category": "низька"
+  },
+  {
+    "flight_number": "107",
+    "date": "2026-11-08",
+    "direction": "Луцьк — Рівне",
+    "passengers": 18,
+    "capacity": 30,
+    "ticket_price": 180.0,
+    "revenue": 3240.0,
+    "occupancy_percent": 60.0,
+    "occupancy_category": "низька"
+  }
+]
